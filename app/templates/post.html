@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header>
+        <a href="" class="logo"><img src="{{ url_for('static',filename = 'css/img/io.png' ) }}" alt=""></a>
+        <div id="toggle" onclick="toggle()"></div>
+    </header>
+    <div class="about-content">
+    <h3 class="m-15">POST</h3>
+        <article class="media content-section">
+          <img src="{{ url_for('static', filename='profile_photo/' + post.author.image_file) }}" class="rounded-circle article-image" alt="">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a href="{{ url_for('user_posts', username=post.author.username) }}"><p class="mr-2 ml-2">{{ post.author.username }}</p></a>
+              <small class="text-muted ml-2">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+              {% if post.author == current_user %}
+                <div>
+                    <a href="{{ url_for('updatepost', post_id= post.id) }}" class="btn btn-secondary btn-sm m-1 ml-2">Update</a>
+                    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-backdrop="static" data-target="#deleteModalCenter">Delete</button>
+                </div>
+              {% endif %}
+            </div>
+            <h4 class="article-title">{{ post.title }}</h4>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+        <!--Modal block-->
+        <div class="modal fade" id="deleteModalCenter" tabindex="-1" role="dialog" data-backdrop="false" aria-labelledby="deleteModalLabel" aria-hidden="true" >
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title" id="deleteModalLongTitle">Delete Post</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>This procedure is an irreversible one. If you delete this post you can't reverse it.Are you sure you want to go ahead?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock content %}

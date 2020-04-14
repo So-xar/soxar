@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+    <header>
+        <a href="" class="logo"><img src="{{ url_for('static',filename = 'css/img/io.png' ) }}" alt=""></a>
+        <div id="toggle" onclick="toggle()"></div>
+    </header>
+    <div class="about-content">
+        <h1>LOGIN</h1>
+    </div>
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag()}}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span class="text-danger">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                            {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-check">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info mt-2") }}
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                </small>
+            </div>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Don't have an account?<a href="{{ url_for('register') }}" class="ml-2">Sign Up</a>
+        </small>
+    </div>
+        
+{% endblock content %}

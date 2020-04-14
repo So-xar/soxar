@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!--Bootstrap css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/all.css') }}">
+    <!--Custom css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/main.css') }}">
+    {% if title %}
+        <title>Cone Blog - {{ title }}</title>
+    {% else %}
+        <title>Cone Blog</title>
+    {% endif %}
+</head>
+<body>
+    <section class="banner" id="sec">
+        <div class="extension">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}
+            {% endblock %}
+        </div>
+        
+        <ul class="iconics">
+            <li><a href="/"><i class="fab fa-facebook"></i></a></li>
+            <li><a href=""><i class="fab fa-twitter"></i></a></li>
+            <li><a href=""><i class="fab fa-github"></i></a></li>
+            <li><a href=""><i class="fab fa-instagram"></i></a></li>
+            <li><a href=""><i class="fab fa-linkedin"></i></a></li>
+        </ul>
+    </section>
+    <div id="navigation">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('services') }}">Services</a></li>
+            <li><a href="{{ url_for('blog') }}">Blog</a></li>
+            <li><a href="{{ url_for('team') }}">Team</a></li>
+
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('new_post') }}">New Posts</a></li>
+                <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    
+    <footer></footer>
+
+
+    <script type="text/javascript">
+    function toggle(){
+        var sec = document.getElementById('sec');
+        var nav = document.getElementById('navigation');
+        sec.classList.toggle('active');
+        nav.classList.toggle('active');
+    }
+    </script>
+
+    <!--Bootstrap javascript-->
+    <script src="{{ url_for('static', filename = 'js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/jquery-3.4.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/all.js') }}"></script>
+    <script src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+    
+</body>
+</html>

@@ -8,13 +8,13 @@
     <h3 class="m-15">RECENT POSTS</h3>
     {% for post in posts.items %}
         <article class="media content-section">
-          <img src="{{ url_for('static', filename='profile_photo/' + post.author.image_file) }}" class="rounded-circle" alt="">
+          <img src="{{ url_for('static', filename='profile_photo/' + post.author.image_file) }}" class="rounded-circle" width="120px" height="120px" alt="user-image">
           <div class="media-body">
             <div class="article-metadata">
-              <a href="{{ url_for('user_posts', username=post.author.username) }}"><p class="mr-2 ml-2">{{ post.author.username }}</p></a>
+              <a href="{{ url_for('users.user_posts', username=post.author.username) }}"><p class="mr-2 ml-2">{{ post.author.username }}</p></a>
               <small class="text-muted ml-2">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h4><a class="article-title ml-2" href="{{ url_for('post', post_id = post.id) }}">{{ post.title }}</a></h4>
+            <h4><a class="article-title ml-2" href="{{ url_for('posts.post', post_id = post.id) }}">{{ post.title }}</a></h4>
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
@@ -23,9 +23,9 @@
       {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
           {% if page_num %}
             {% if posts.page == page_num %}
-              <a class="btn btn-info mb-4 ml-1 mr-1" href="{{ url_for('blog', page=page_num) }}">{{ page_num }}</a>
+              <a class="btn btn-info mb-4 ml-1 mr-1" href="{{ url_for('main.blog', page=page_num) }}">{{ page_num }}</a>
             {% else %}
-              <a class="btn btn-outline-info mb-4 ml-1 mr-1" href="{{ url_for('blog', page=page_num) }}">{{ page_num }}</a>
+              <a class="btn btn-outline-info mb-4 ml-1 mr-1" href="{{ url_for('main.blog', page=page_num) }}">{{ page_num }}</a>
             {% endif %}
           {% else %}
             ...

@@ -7,14 +7,14 @@
     <div class="about-content">
     <h3 class="m-15">POST</h3>
         <article class="media content-section">
-          <img src="{{ url_for('static', filename='profile_photo/' + post.author.image_file) }}" class="rounded-circle article-image" alt="">
+          <img src="{{ url_for('static', filename='profile_photo/' + post.author.image_file) }}" class="rounded-circle article-image" width="120px" height="120px" alt="user_image">
           <div class="media-body">
             <div class="article-metadata">
-              <a href="{{ url_for('user_posts', username=post.author.username) }}"><p class="mr-2 ml-2">{{ post.author.username }}</p></a>
+              <a href="{{ url_for('users.user_posts', username=post.author.username) }}"><p class="mr-2 ml-2">{{ post.author.username }}</p></a>
               <small class="text-muted ml-2">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
               {% if post.author == current_user %}
                 <div>
-                    <a href="{{ url_for('updatepost', post_id= post.id) }}" class="btn btn-secondary btn-sm m-1 ml-2">Update</a>
+                    <a href="{{ url_for('posts.updatepost', post_id= post.id) }}" class="btn btn-secondary btn-sm m-1 ml-2">Update</a>
                     <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-backdrop="static" data-target="#deleteModalCenter">Delete</button>
                 </div>
               {% endif %}
@@ -38,7 +38,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-              <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+              <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
                 <input class="btn btn-danger" type="submit" value="Delete">
               </form>
               </div>

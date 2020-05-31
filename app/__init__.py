@@ -6,25 +6,16 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from app.config import Config
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
 login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 mail = Mail()
 
 
-from app.users.routes import users
-from app.posts.routes import posts
-from app.main.routes import main
-
-app.register_blueprint(users)
-app.register_blueprint(posts)
-app.register_blueprint(main)
-
-def create_app(config_class=config):
+def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
@@ -36,8 +27,14 @@ def create_app(config_class=config):
     from app.users.routes import users
     from app.posts.routes import posts
     from app.main.routes import main
+    from app.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(posts)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
+
+
 
     return app
+
+    

@@ -2,7 +2,13 @@
 from flask import render_template, request, Blueprint
 from app.models import Post
 
+
+
 main = Blueprint('main', __name__)
+
+from app import create_app
+app = create_app()
+app.app_context().push()
 
 
 @main.route("/")
